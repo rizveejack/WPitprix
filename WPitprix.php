@@ -1,14 +1,14 @@
 <?php
 /**
- * Plugin Name: Custom Plaguin
- * Description: Description
+ * Plugin Name: WpItprix
+ * Description: itprix official plaguin for headless wordpress
  * Plugin URI: http://itprix.com
- * Author: Author
+ * Author: Subbir Ahamed
  * Author URI: http://itprix.com
  * Version: 1.0.0
  * License: GPL2
- * Text Domain: text-domain
- * Domain Path: domain/path
+ * Text Domain: wpitprix
+ * Domain Path: http://itprix.com
  */
 
 defined('ABSPATH') or die("dont try to be smart");
@@ -25,7 +25,7 @@ defined('ABSPATH') or die("dont try to be smart");
      */
     function find_matching_product_variation_id($product_id, $variation_data)
     {
-    	$product         = wc_get_product( $product_id );
+    $product         = wc_get_product( $product_id );
 	$attribute_names = array_keys( $product->get_attributes() );
  	$attributes = array();
 		foreach ( $variation_data as $attribute ) {
@@ -56,17 +56,13 @@ defined('ABSPATH') or die("dont try to be smart");
     }
 
 function searchVariation(){
-# This function registers a mutation to the Schema.
-# The first argument, in this case `exampleMutation`, is the name of the mutation in the Schema
-# The second argument is an array to configure the mutation.
-# The config array accepts 3 key/value pairs for: inputFields, outputFields and mutateAndGetPayload.
 register_graphql_mutation( 'searchVariation', [
 
 	# inputFields expects an array of Fields to be used for inputting values to the mutation
 	'inputFields'         => [
 		'productId' => [
 			'type' => array( 'non_null' => 'Int' ),
-			'description' => __( 'Description of the input field', 'your-textdomain' ),
+			'description' => __( 'Description of the input field', 'wpitprix' ),
 		],
 		'variation'   => [
 				'type'        => array( 'list_of' => 'ProductAttributeInput' ),
@@ -75,19 +71,18 @@ register_graphql_mutation( 'searchVariation', [
 	],
 
 	# outputFields expects an array of fields that can be asked for in response to the mutation
-	# the resolve function is optional, but can be useful if the mutateAndPayload doesn't return an array
-	# with the same key(s) as the outputFields
+	
 	'outputFields'        => [
 		'varientId' => [
 			'type' => 'Int',
-			'description' => __( 'Description of the output field', 'your-textdomain' ),
+			'description' => __( 'Description of the output field', 'wpitprix' ),
 			'resolve' => function( $payload, $args, $context, $info ) {
                    		return isset( $payload['varientId'] ) ? $payload['varientId'] : null;
 			}
 		],
 		'price' => [
 			'type' => 'String',
-			'description' => __( 'Description of the output field', 'your-textdomain' ),
+			'description' => __( 'Description of the output field', 'wpitprix' ),
 			'resolve' => function( $payload, $args, $context, $info ) {
                    		return isset( $payload['price'] ) ? $payload['price'] : null;
 			}
@@ -95,7 +90,7 @@ register_graphql_mutation( 'searchVariation', [
 	],
 
 	# mutateAndGetPayload expects a function, and the function gets passed the $input, $context, and $info
-	# the function should return enough info for the outputFields to resolve with
+	
 	'mutateAndGetPayload' => function( $input, $context, $info ) {
 		// Do any logic here to sanitize the input, check user capabilities, etc
 		$exampleOutput = null;
