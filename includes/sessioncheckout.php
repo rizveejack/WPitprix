@@ -121,7 +121,7 @@ class SessionCheckout
 	public function woo_custom_redirect_after_purchase() {
 		global $wp;
 		if ( is_checkout() && !empty( $wp->query_vars['order-received'] ) ) {
-			wp_redirect( 'http://localhost:3000/thankyou?order_id='.$wp->query_vars['order-received'] );
+			wp_redirect( get_site_url().'/thankyou?order_id='.$wp->query_vars['order-received'] );
 			exit;
 		}
 	}
