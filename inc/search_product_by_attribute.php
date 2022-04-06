@@ -85,7 +85,7 @@ class SearchProductByAttribute
 				if ( ! empty( $input['productId'] ) ) {
 					$exampleOutput = $input['productId'];
 					$product         = wc_get_product( $exampleOutput );
-					$attributes = $input[variation];
+					$attributes = $input['variation'];
 					$variationid = $this->find_matching_product_variation_id($exampleOutput, $attributes);
 				}
 				return [
