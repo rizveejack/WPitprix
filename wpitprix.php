@@ -19,8 +19,16 @@
 
 // sequre the plaguin from hacker
 defined('ABSPATH') or die("error...");
-require_once 'includes/search_product_by_attribute.php';
-require_once 'includes/sessioncheckout.php';
+
+if ( file_exists( plugin_dir_path( __FILE__ ) . 'inc/search_product_by_attribute.php' ) ) {
+    include_once plugin_dir_path( __FILE__ ) . 'inc/search_product_by_attribute.php';
+}
+
+if ( file_exists( plugin_dir_path( __FILE__ ) . 'inc/sessioncheckout.php' ) ) {
+    include_once plugin_dir_path( __FILE__ ) . 'inc/sessioncheckout.php';
+}
+
+
 
 /**
  * @WPitprix plaguin
