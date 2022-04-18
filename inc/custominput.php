@@ -1,4 +1,27 @@
-function itprix_create_custom_field() {
+<?php 
+
+
+/**
+ * 
+ */
+class CustomInput
+{
+    
+    function __construct()
+    {
+        add_filter( 'woocommerce_order_item_product', [$this,'itprix_product_add_on_display_order'], 10, 2 );
+        add_action( 'woocommerce_process_product_meta', [$this,'itprix_save_custom_field'] );
+        add_action( 'woocommerce_product_options_advanced', [$this,'itprix_create_custom_field'] );
+        add_filter( 'woocommerce_add_to_cart_validation', [$this,'itprix_product_add_on_validation'], 10, 3 );
+        add_filter( 'woocommerce_add_cart_item_data', [$this,'itprix_product_add_on_cart_item_data'], 10, 2 );
+        add_filter( 'woocommerce_email_order_meta_fields', [$this,'itprix_product_add_on_display_emails'] );
+        add_action( 'woocommerce_before_add_to_cart_button', [$this,'itprix_product_add_on'], 9 );
+        add_filter( 'woocommerce_get_item_data', [$this,'itprix_product_add_on_display_cart'], 10, 2 );
+        add_action( 'woocommerce_add_order_item_meta', [$this,'itprix_product_add_on_order_item_meta'], 10, 2 );
+    }
+
+
+    function itprix_create_custom_field() {
     $args = array(
     'id' => 'isCustomizeProduct',
     'label' => __( 'Active Custom Text Field', 'itprix' ),
@@ -10,7 +33,7 @@ function itprix_create_custom_field() {
     
     woocommerce_wp_select( $args );
    }
-   add_action( 'woocommerce_product_options_advanced', 'itprix_create_custom_field' );
+   
 
 
 
@@ -20,7 +43,7 @@ function itprix_create_custom_field() {
     $product->update_meta_data( 'isCustomizeProduct', sanitize_text_field( $isCustomizeProduct ) );
     $product->save();
    }
-   add_action( 'woocommerce_process_product_meta', 'itprix_save_custom_field' );
+   
 
    
 
@@ -28,7 +51,7 @@ function itprix_create_custom_field() {
 
 // 1. Show input field 
 
-add_action( 'woocommerce_before_add_to_cart_button', 'itprix_product_add_on', 9 );
+
 
 function itprix_product_add_on() {
     global $post;
@@ -46,7 +69,7 @@ function itprix_product_add_on() {
 
 // 2. Throw error if custom input field empty
 
-add_filter( 'woocommerce_add_to_cart_validation', 'itprix_product_add_on_validation', 10, 3 );
+
 
 function itprix_product_add_on_validation( $passed, $product_id, $qty ){
 
@@ -66,7 +89,7 @@ function itprix_product_add_on_validation( $passed, $product_id, $qty ){
 
 // 3. Save custom input field value into cart item data
 
-add_filter( 'woocommerce_add_cart_item_data', 'itprix_product_add_on_cart_item_data', 10, 2 );
+
 
 function itprix_product_add_on_cart_item_data( $cart_item, $product_id ){
 
@@ -84,7 +107,7 @@ function itprix_product_add_on_cart_item_data( $cart_item, $product_id ){
 
 // 4. Display custom input field value @ Cart
 
-add_filter( 'woocommerce_get_item_data', 'itprix_product_add_on_display_cart', 10, 2 );
+
 
 function itprix_product_add_on_display_cart( $data, $cart_item ) {
 
@@ -108,7 +131,7 @@ function itprix_product_add_on_display_cart( $data, $cart_item ) {
 
 // 5. Save custom input field value into order item meta
 
-add_action( 'woocommerce_add_order_item_meta', 'itprix_product_add_on_order_item_meta', 10, 2 );
+
 
 function itprix_product_add_on_order_item_meta( $item_id, $values ) {
 
@@ -124,7 +147,7 @@ function itprix_product_add_on_order_item_meta( $item_id, $values ) {
 
 // 6. Display custom input field value into order table
 
-add_filter( 'woocommerce_order_item_product', 'itprix_product_add_on_display_order', 10, 2 );
+
 
 function itprix_product_add_on_display_order( $cart_item, $order_item ){
 
@@ -142,7 +165,7 @@ function itprix_product_add_on_display_order( $cart_item, $order_item ){
 
 // 7. Display custom input field value into order emails
 
-add_filter( 'woocommerce_email_order_meta_fields', 'itprix_product_add_on_display_emails' );
+
 
 function itprix_product_add_on_display_emails( $fields ) {
 
@@ -150,4 +173,5 @@ function itprix_product_add_on_display_emails( $fields ) {
 
     return $fields;
 
+}
 }

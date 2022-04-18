@@ -21,6 +21,7 @@
 defined('ABSPATH') or die("error...");
 include_once plugin_dir_path( __FILE__ ) . 'inc/search_product_by_attribute.php';
 include_once plugin_dir_path( __FILE__ ) . 'inc/sessioncheckout.php';
+include_once plugin_dir_path( __FILE__ ) . 'inc/custominput.php';
 /**
  * @WPitprix plaguin
  */
@@ -31,6 +32,7 @@ class WPitprix
 	{
 		new SearchProductByAttribute();
 		new SessionCheckout();
+        new CustomInput();
 	}
 }
 
