@@ -23,7 +23,7 @@ class CustomInput
 
     function itprix_create_custom_field() {
     $args = array(
-    'id' => 'isCustomizeProduct',
+    'id' => '_isCustomizeProduct',
     'label' => __( 'Active Custom Text Field', 'itprix' ),
     'class' => 'itprix-custom-field',
     'desc_tip' => true,
@@ -31,6 +31,12 @@ class CustomInput
     'description' => __( 'Do you need Custom Text Field?.', 'itprix' ),
     );
     
+
+    woocommerce_wp_text_input([
+            'id' => '_instraction_text',
+            'label' => __('Text Instraction', 'txtdomain'),
+    ]);
+
     woocommerce_wp_select( $args );
    }
    
@@ -39,8 +45,10 @@ class CustomInput
 
    function itprix_save_custom_field( $post_id ) {
     $product = wc_get_product( $post_id );
-    $isCustomizeProduct = isset( $_POST['isCustomizeProduct'] ) ? $_POST['isCustomizeProduct'] : '';
-    $product->update_meta_data( 'isCustomizeProduct', sanitize_text_field( $isCustomizeProduct ) );
+    $isCustomizeProduct = isset( $_POST['_isCustomizeProduct'] ) ? $_POST['_isCustomizeProduct'] : '';
+    $instraction_text = isset( $_POST['_instraction_text'] ) ? $_POST['_instraction_text'] : '';
+    $product->update_meta_data( '_isCustomizeProduct', sanitize_text_field( $isCustomizeProduct) );
+    $product->update_meta_data( '_instraction_text', sanitize_text_field( $instraction_text) );
     $product->save();
    }
    
