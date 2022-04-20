@@ -5,7 +5,7 @@ class RegisterFields
 	function __construct()
 	{
 		add_action('graphql_register_types',[$this,'custom_post_field']);
-    add_action('graphql_register_types',[$this,'register_Swag']);
+    // add_action('graphql_register_types',[$this,'register_Swag']);
 	}
 
  
@@ -14,7 +14,7 @@ function custom_post_field()
 {
   register_graphql_object_type( 'CustomPost', [
       'fields' => [
-        'isCustomizeProduct'  => [ 'type' => 'String' ],
+        'isCustomizeProduct'  => [ 'type' => 'Boolean' ],
         'instractionText' => [ 'type' => 'String' ],
       ]
     ] );
@@ -40,7 +40,7 @@ register_graphql_field(
         'resolve'     => function ($product) {
           $isCustomizeProduct = get_post_meta( $product->ID, '_isCustomizeProduct', true );
           $instractionText = get_post_meta( $product->ID, '_instraction_text', true );
-          return ['isCustomizeProduct'  => $isCustomizeProduct,'instractionText' => $instractionText];
+          return ['isCustomizeProduct'  => filter_var( $isCustomizeProduct, FILTER_VALIDATE_BOOLEAN),'instractionText' => $instractionText];
 
         },
       ]
